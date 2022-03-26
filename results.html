@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Results</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous"
+    referrerpolicy="no-referrer" />
+</head>
+
+<body>
+  <h1 class="result-header">Maiya Maths Test - Your Results</h1>
+  <div id="results"></div>
+  <!-- <div class="ending">
+    <a href="index.html"><button type="button" class="btn btn-primary btn-lg back-btn" name="button">Back to the quiz</button></a>
+  </div> -->
+
+  <script>
+    const resultsList = document.getElementById('results')
+    let quest = "";
+    let qora = "";
+    let counter=0;
+    let correctCount=0;
+    let wrongCount=0;
+    let overallTotal = 0;
+    let correctPercent=0;
+    new URLSearchParams(window.location.search).forEach((value, name) => {
+      qora = name.charAt(0);
+      if (qora == "q") {
+        counter=counter+1;
+        quest = value;
+      }
+      if (qora == "a" && quest == value) {
+        // resultsList.append(`${name}: ${value}`);
+        correctCount = correctCount + 1;
+        overallTotal = overallTotal + 1;
+        var para = document.createElement("p");
+        para.classList.add("correct-num");
+        var node = document.createTextNode(`Question (${counter}) `);
+        para.appendChild(node);
+        resultsList.append(para);
+
+        para = document.createElement("p");
+        para.classList.add("correct-ans");
+        node = document.createTextNode(`${value} `);
+        para.appendChild(node);
+        resultsList.append(para);
+
+        node = document.createTextNode('\u2713');
+        para.appendChild(node);
+        resultsList.append(para);
+      }
+
+      if (qora == "a" && quest != value) {
+        wrongCount = wrongCount + 1;
+        overallTotal = overallTotal + 1;
+
+        var para = document.createElement("p");
+        para.classList.add("wrong-num");
+        var node = document.createTextNode(`Question (${counter}) `);
+        para.appendChild(node);
+        resultsList.append(para);
+
+        para = document.createElement("p");
+        para.classList.add("wrong-ans");
+        node = document.createTextNode(`${quest} `);
+        para.appendChild(node);
+        resultsList.append(para);
+
+        node = document.createTextNode('\u274C');
+        para.appendChild(node);
+        resultsList.append(para);
+      }
+
+    })
+    resultsList.append(document.createElement('hr'));
+
+    var paraYou = document.createElement("p");
+    paraYou.classList.add("correct-num");
+    var nodeYou = document.createTextNode(`You got ${correctCount} correct out of ${overallTotal}`);
+    paraYou.appendChild(nodeYou);
+    resultsList.append(paraYou);
+
+    resultsList.append(document.createElement('br'));
+    correctPercent = (correctCount / overallTotal) * 100;
+
+
+    paraYou = document.createElement("p");
+    paraYou.classList.add("correct-num");
+    nodeYou = document.createTextNode(`${correctPercent} %`);
+    paraYou.appendChild(nodeYou);
+    resultsList.append(paraYou);
+
+    resultsList.append(document.createElement('br'));
+  </script>
+</body>
+
+</html>
